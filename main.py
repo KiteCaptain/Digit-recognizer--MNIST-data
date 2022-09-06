@@ -1,5 +1,5 @@
 import numpy as np 
-import matplotlib.pyplot as py
+from matplotlib import pyplot as plt
 import pandas as pd
 
 data = pd.read_csv('data/train.csv')
@@ -113,11 +113,6 @@ def gradient_descent(X, Y, alpha, iterations):
             print('Accuracy: ', get_accuracy(predictions, Y))
     return W1, b1, W2, b2
 
-        
-
-W1, b1, W2, b2 = gradient_descent(X_train, Y_train , 0.1, 10000)
-
-
 def make_predictions(X, W1, b1, W2, b2):
     _, _, _, A2 = forward_prop(W1, b1, W2, b2, X)
     predictions = get_predictions(A2)
@@ -132,5 +127,37 @@ def test_prediction(index, W1, b1, W2, b2):
 
     current_image = current_image.reshape((28, 28)) * 255
     plt.gray()
+    plt.title("prediction: " +str(prediction) +", label: " + str(label))
     plt.imshow(current_image, interpolation="nearest")
-    plt.show
+    plt.show()
+
+        
+# ACTUAL TESTING
+
+# W1, b1, W2, b2 = gradient_descent(X_train, Y_train , 0.1, 10000)
+W1 = np.load('W1.npy', allow_pickle=True) 
+b1 = np.load('b1.npy', allow_pickle=True) 
+W2 = np.load('W2.npy', allow_pickle=True) 
+b2 = np.load('b2.npy', allow_pickle=True) 
+
+
+
+
+test_prediction(10, W1, b1, W2, b2)
+test_prediction(30, W1, b1, W2, b2)
+test_prediction(20, W1, b1, W2, b2)
+test_prediction(70, W1, b1, W2, b2)
+test_prediction(45, W1, b1, W2, b2)
+test_prediction(23, W1, b1, W2, b2)
+test_prediction(40, W1, b1, W2, b2)
+test_prediction(12, W1, b1, W2, b2)
+test_prediction(7, W1, b1, W2, b2)
+test_prediction(2, W1, b1, W2, b2)
+test_prediction(60, W1, b1, W2, b2)
+test_prediction(54, W1, b1, W2, b2)
+test_prediction(17, W1, b1, W2, b2)
+
+
+dev_predictions = make_predictions(X_dev, W1, b1, W2, b2)
+get_accuracy(dev_predictions, Y_dev)
+
